@@ -1,0 +1,11 @@
+<svg width="140" height="32" viewBox="0 0 140 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 2L4 6.5V13C4 18.55 8.33 23.74 14 25C19.67 23.74 24 18.55 24 13V6.5L14 2Z" fill="url(#logo-gradient)"/>
+  <path d="M11 14l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="32" y="22" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">Sentorix</text>
+  <defs>
+    <linearGradient id="logo-gradient" x1="4" y1="2" x2="24" y2="25" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818CF8"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+</svg>

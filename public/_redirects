@@ -1,0 +1,5 @@
+# Redirect www to apex
+https://www.sentorix.io/* https://sentorix.io/:splat 301
+
+# Redirect app subdomain to dashboard
+/app https://app.sentorix.io 302
