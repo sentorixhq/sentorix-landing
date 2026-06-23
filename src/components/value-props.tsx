@@ -27,7 +27,7 @@ const cards = [
   {
     icon: FileCheck,
     title: "Audit-ready from day one",
-    body: "Immutable audit logs stored with AWS S3 Object Lock in COMPLIANCE mode. 7-year retention. Export for regulatory submissions in one click.",
+    body: "Immutable Audit logs stored with AWS S3 Object Lock in COMPLIANCE mode. 7-year retention. Export for regulatory submissions in one click.",
     features: [
       "EU AI Act ready",
       "HIPAA compatible",

@@ -154,8 +154,8 @@ export function Hero() {
 
         {/* Social proof line */}
         <p className="mt-6 text-sm text-gray-500">
-          Trusted by teams building AI-powered fintech, healthcare, and HR
-          platforms
+          Trusted by teams building AI-powered Fintech, Healthcare, and HR
+          Platforms
         </p>
 
         {/* Code block */}

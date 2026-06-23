@@ -14,7 +14,7 @@ export function Badge({ children, className }: BadgeProps) {
     <span
       className={cn(
         "inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide",
-        "bg-brand-900/50 text-brand-300 border border-brand-500/30",
+        "bg-brand-800/60 text-brand-100 border border-brand-400/60",
         className
       )}
     >

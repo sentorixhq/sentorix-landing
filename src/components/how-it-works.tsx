@@ -194,7 +194,7 @@ const steps = [
     number: "03",
     title: "Log",
     description:
-      "Every interaction is hashed and written to tamper-proof audit storage. 7-year retention. Compliance reports in one click.",
+      "Every interaction is hashed and written to tamper-proof Audit storage. 7-year retention. Compliance reports in one click.",
   },
 ];
 
@@ -213,16 +213,21 @@ export function HowItWorks() {
 
       <ArchitectureDiagram />
 
-      <div className="mt-14 grid sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        {steps.map((step) => (
-          <div key={step.number} className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-500 text-white font-bold text-lg mb-4">
+      <div className="mt-14 grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {steps.map((step, i) => (
+          <div
+            key={step.number}
+            className="group animate-fade-in-up relative bg-white border border-gray-100 rounded-2xl p-8 shadow-sm text-center hover:-translate-y-1.5 transition-all duration-300 hover:shadow-lg hover:border-brand-100"
+            style={{ animationDelay: `${i * 150}ms`, opacity: 0 }}
+          >
+            <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-brand-400 to-brand-600" />
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-500 text-white font-bold text-lg mb-5 shadow-md transition-transform duration-300 group-hover:scale-110">
               {step.number}
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">
               {step.title}
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-gray-500 leading-relaxed">
               {step.description}
             </p>
           </div>

@@ -77,6 +77,79 @@ const response = await client.chat.completions.create({
   },
 ];
 
+// ── Syntax highlighting ──────────────────────────────────────────────────────
+
+type PatternList = Array<[RegExp, string]>;
+
+const PY: PatternList = [
+  [/#.*$/, "text-gray-500"],
+  [/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/, "text-emerald-400"],
+  [/\b(import|from|def|class|return|if|else|for|in|not|and|or|True|False|None)\b/, "text-violet-400"],
+  [/\b(openai|client|response)\b/, "text-sky-300"],
+  [/\b\w+(?=\s*\()/, "text-yellow-300"],
+  [/[{}[\]().,]/, "text-gray-400"],
+];
+
+const JS: PatternList = [
+  [/\/\/.*$/, "text-gray-500"],
+  [/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/, "text-emerald-400"],
+  [/\b(import|from|export|const|let|var|new|await|async|return|if|else|of|true|false|null)\b/, "text-violet-400"],
+  [/\b(OpenAI|client|response)\b/, "text-sky-300"],
+  [/\b\w+(?=\s*\()/, "text-yellow-300"],
+  [/[{}[\]().,]/, "text-gray-400"],
+];
+
+const CURL: PatternList = [
+  [/\bcurl\b/, "text-violet-400"],
+  [/https?:\/\/[^\s\\']+/, "text-cyan-400"],
+  [/(?:^|\s)(-[A-Za-z])\b/, "text-yellow-300"],
+  [/\b(POST|GET|PUT|DELETE|PATCH)\b/, "text-orange-400"],
+  [/"(?:[^"\\]|\\.)*"/, "text-emerald-400"],
+  [/'(?:[^'\\]|\\.)*'/, "text-emerald-400"],
+  [/\\$/, "text-gray-500"],
+];
+
+function renderLine(line: string, patterns: PatternList, key: number): React.ReactNode {
+  const chunks: React.ReactNode[] = [];
+  let rest = line;
+  let guard = 0;
+
+  while (rest.length > 0 && guard++ < 500) {
+    let best: { start: number; end: number; cls: string } | null = null;
+
+    for (const [re, cls] of patterns) {
+      const m = new RegExp(re.source, re.flags.replace(/g/g, "")).exec(rest);
+      if (m && m[0].length > 0) {
+        const start = m.index;
+        const end = start + m[0].length;
+        if (best === null || start < best.start) {
+          best = { start, end, cls };
+          if (start === 0) break;
+        }
+      }
+    }
+
+    if (!best) {
+      chunks.push(<span key={chunks.length} className="text-gray-300">{rest}</span>);
+      break;
+    }
+    if (best.start > 0) {
+      chunks.push(<span key={chunks.length} className="text-gray-300">{rest.slice(0, best.start)}</span>);
+    }
+    chunks.push(<span key={chunks.length} className={best.cls}>{rest.slice(best.start, best.end)}</span>);
+    rest = rest.slice(best.end);
+  }
+
+  return <span key={key}>{chunks}{"\n"}</span>;
+}
+
+function highlight(code: string, lang: string): React.ReactNode {
+  const patterns = lang === "Python" ? PY : lang === "Node.js" ? JS : CURL;
+  return code.split("\n").map((line, i) => renderLine(line, patterns, i));
+}
+
+// ── CodeTabs ─────────────────────────────────────────────────────────────────
+
 function CodeTabs() {
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -86,6 +159,8 @@ function CodeTabs() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const active = tabs[activeTab];
 
   return (
     <div className="rounded-xl overflow-hidden border border-gray-200 bg-dark-950 shadow-xl">
@@ -126,8 +201,8 @@ function CodeTabs() {
       </div>
 
       {/* Code content */}
-      <pre className="p-5 text-xs sm:text-sm overflow-x-auto leading-relaxed text-gray-300">
-        <code>{tabs[activeTab].code}</code>
+      <pre className="p-5 text-xs sm:text-sm overflow-x-auto leading-relaxed">
+        <code>{highlight(active.code, active.label)}</code>
       </pre>
     </div>
   );
@@ -138,10 +213,10 @@ export function ForDevelopers() {
     <Section id="for-developers" className="bg-white">
       <div className="text-center mb-12">
         <SectionHeading className="text-gray-900">
-          Built by developers, for developers
+          Built by Developers, for Developers
         </SectionHeading>
         <SectionSubheading className="mx-auto">
-          Sentorix is designed to be invisible. Your developers keep using the
+          Sentorix is designed to be invisible. Your Developers keep using the
           OpenAI SDK they know. Governance happens automatically.
         </SectionSubheading>
       </div>

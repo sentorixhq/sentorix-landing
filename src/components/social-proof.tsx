@@ -4,7 +4,7 @@ const regulations = [
   {
     name: "EU AI Act",
     description:
-      "High-risk AI systems require documentation, human oversight, and audit trails. Sentorix makes compliance automatic.",
+      "High-risk AI systems require documentation, human oversight, and Audit trails. Sentorix makes compliance automatic.",
   },
   {
     name: "HIPAA",
@@ -14,7 +14,7 @@ const regulations = [
   {
     name: "India DPDP Act",
     description:
-      "Personal data processing requires purpose limitation and audit trails. Sentorix enforces both at the AI layer.",
+      "Personal data processing requires purpose limitation and Audit trails. Sentorix enforces both at the AI layer.",
   },
   {
     name: "GDPR / SOC 2",
@@ -41,19 +41,19 @@ export function SocialProof() {
           </SectionHeading>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
           {/* Left: Regulation cards */}
-          <div className="space-y-4">
+          <div className="flex flex-col gap-4">
             {regulations.map((reg) => (
               <div
                 key={reg.name}
-                className="bg-dark-800 border border-white/10 rounded-xl p-5 hover:border-brand-500/30 transition-colors"
+                className="flex-1 bg-dark-800 border border-white/10 rounded-xl p-5 hover:border-brand-500/30 transition-colors"
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-block px-3 py-1 bg-brand-500/20 text-brand-300 text-xs font-bold rounded-full mt-0.5 shrink-0">
+                  <span className="inline-block px-3 py-1 bg-brand-500/20 text-indigo-300 text-xs font-bold rounded-full mt-0.5 shrink-0">
                     {reg.name}
                   </span>
-                  <p className="text-sm text-gray-400 leading-relaxed">
+                  <p className="text-sm text-gray-200 leading-relaxed">
                     {reg.description}
                   </p>
                 </div>
@@ -90,11 +90,11 @@ export function SocialProof() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-white/5">
-                    <th className="text-left px-4 py-3 text-gray-400 font-medium w-1/3" />
-                    <th className="text-center px-4 py-3 text-gray-300 font-semibold">
+                    <th className="text-left px-4 py-3 text-gray-300 font-medium w-1/3" />
+                    <th className="text-center px-4 py-3 text-gray-100 font-semibold">
                       Cloudflare
                     </th>
-                    <th className="text-center px-4 py-3 text-brand-300 font-semibold">
+                    <th className="text-center px-4 py-3 text-indigo-300 font-semibold">
                       Sentorix
                     </th>
                   </tr>
@@ -107,13 +107,13 @@ export function SocialProof() {
                         i % 2 === 0 ? "bg-transparent" : "bg-white/[0.02]"
                       }`}
                     >
-                      <td className="px-4 py-3 text-gray-500 font-medium">
+                      <td className="px-4 py-3 text-gray-300 font-medium">
                         {row.label}
                       </td>
-                      <td className="px-4 py-3 text-center text-gray-400">
+                      <td className="px-4 py-3 text-center text-gray-200">
                         {row.cf}
                       </td>
-                      <td className="px-4 py-3 text-center text-brand-300 font-medium">
+                      <td className="px-4 py-3 text-center text-indigo-300 font-medium">
                         {row.sx}
                       </td>
                     </tr>
