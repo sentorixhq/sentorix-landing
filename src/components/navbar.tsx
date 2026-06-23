@@ -2,44 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-
-function ShieldIcon() {
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 28 28"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M14 2L4 6.5V13C4 18.55 8.33 23.74 14 25C19.67 23.74 24 18.55 24 13V6.5L14 2Z"
-        fill="url(#shield-gradient)"
-      />
-      <path
-        d="M11 14l2 2 4-4"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient
-          id="shield-gradient"
-          x1="4"
-          y1="2"
-          x2="24"
-          y2="25"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#818CF8" />
-          <stop offset="1" stopColor="#6366F1" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
+import Image from "next/image";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -53,7 +16,7 @@ export function Navbar() {
 
   const navLinks = [
     { label: "How it works", href: "#how-it-works" },
-    { label: "For developers", href: "#for-developers" },
+    { label: "For Developers", href: "#for-developers" },
   ];
 
   const scrollTo = (href: string) => {
@@ -77,12 +40,16 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a
-          href="/"
-          className="flex items-center gap-2.5 text-white font-bold text-lg hover:opacity-90 transition-opacity"
-        >
-          <ShieldIcon />
-          <span className="tracking-tight">Sentorix</span>
+        <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <Image
+            src="/sentorix-icon.png"
+            alt="Sentorix"
+            width={40}
+            height={40}
+            className="h-9 w-auto"
+            priority
+          />
+          <span className="text-white font-bold text-lg tracking-tight">Sentorix</span>
         </a>
 
         {/* Desktop nav */}

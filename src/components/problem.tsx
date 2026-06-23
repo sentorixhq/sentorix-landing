@@ -49,15 +49,16 @@ export function Problem() {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        {problems.map((p) => {
+        {problems.map((p, i) => {
           const Icon = p.icon;
           return (
             <div
               key={p.title}
-              className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:-translate-y-0.5 transition-all duration-200 hover:shadow-md"
+              className="group animate-fade-in-up bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:-translate-y-1.5 transition-all duration-300 hover:shadow-lg hover:border-gray-300"
+              style={{ animationDelay: `${i * 100}ms`, opacity: 0 }}
             >
               <div
-                className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${p.iconBg} mb-4`}
+                className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${p.iconBg} mb-4 transition-transform duration-300 group-hover:scale-110`}
               >
                 <Icon size={20} className={p.iconColor} />
               </div>

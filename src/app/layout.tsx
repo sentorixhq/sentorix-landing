@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/sentorix-icon.png",
+    apple: "/sentorix-icon.png",
   },
   robots: {
     index: true,

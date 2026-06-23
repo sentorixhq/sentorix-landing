@@ -1,42 +1,6 @@
 "use client";
 
-function ShieldIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 28 28"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M14 2L4 6.5V13C4 18.55 8.33 23.74 14 25C19.67 23.74 24 18.55 24 13V6.5L14 2Z"
-        fill="url(#footer-shield-gradient)"
-      />
-      <path
-        d="M11 14l2 2 4-4"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient
-          id="footer-shield-gradient"
-          x1="4"
-          y1="2"
-          x2="24"
-          y2="25"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#818CF8" />
-          <stop offset="1" stopColor="#6366F1" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
+import Image from "next/image";
 
 function GitHubIcon() {
   return (
@@ -81,9 +45,15 @@ export function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Column 1: Brand */}
           <div>
-            <div className="flex items-center gap-2 text-white font-bold text-base mb-3">
-              <ShieldIcon />
-              Sentorix
+            <div className="flex items-center gap-2 mb-3">
+              <Image
+                src="/sentorix-icon.png"
+                alt="Sentorix"
+                width={32}
+                height={32}
+                className="h-8 w-auto"
+              />
+              <span className="text-white font-bold text-base">Sentorix</span>
             </div>
             <p className="text-sm text-gray-400 mb-4">AI Governance Gateway</p>
             <p className="text-xs text-gray-600">
@@ -97,7 +67,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: "How it works", action: () => scrollTo("#how-it-works") },
-                { label: "For developers", action: () => scrollTo("#for-developers") },
+                { label: "For Developers", action: () => scrollTo("#for-developers") },
                 { label: "Request a demo", action: () => scrollTo("#demo") },
               ].map((item) => (
                 <li key={item.label}>
