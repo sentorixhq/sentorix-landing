@@ -1,0 +1,60 @@
+name: CI — Landing
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'next.config.ts'
+      - 'tsconfig.json'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'next.config.ts'
+      - '.github/workflows/ci.yml'
+
+# Landing is deployed to Cloudflare Pages (static export).
+# No Docker image or ECR push needed — this workflow validates
+# that lint passes and the static export builds cleanly before merge.
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Lint, Type Check & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build static export
+        run: npm run build
+        env:
+          # Suppress Next.js telemetry in CI
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Upload static export artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-export-${{ github.sha }}
+          path: out/
+          retention-days: 7
