@@ -63,10 +63,19 @@ function buildSegments(
   return segments;
 }
 
-const EXAMPLE_PROMPT = `Hi, I'm Sarah Johnson (sarah.johnson@acme.com).
-My phone is +1-415-555-0182 and SSN is 123-45-6789.
-Card: 4111 1111 1111 1111 (exp 09/27).
-Please summarise the treatment plan for patient record #4929-184 and keep this confidential.`;
+const EXAMPLE_PROMPT = `I need to draft a response to a complaint from one of our customers.
+
+Customer: Michael Torres (michael.torres@brightwave.io)
+Phone: +1-212-555-0347
+Account: #BW-88201
+
+He's disputing a charge of $1,249 on his Visa ending in 4532 1488 0343 6467
+from 14 June 2025. He says he cancelled the subscription on 31 May but was
+still billed. His billing address is 47 Maple Street, Austin, TX 78701.
+
+Please draft a professional apology email, acknowledge the error, confirm
+we'll issue a full refund within 3–5 business days, and offer a 20% discount
+on his next renewal as goodwill. Keep it under 150 words.`;
 
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL ?? "";
 const DEMO_API_KEY = process.env.NEXT_PUBLIC_DEMO_API_KEY ?? "demo-api-key";
