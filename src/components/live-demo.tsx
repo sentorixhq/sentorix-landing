@@ -118,6 +118,27 @@ export function LiveDemo() {
         setError("Gateway is warming up (cold start ~30s). Please try again shortly.");
         return;
       }
+      // 403 POLICY_VIOLATION = request blocked by Sentorix — show as a valid blocked result
+      if (res.status === 403) {
+        const body = await res.json().catch(() => ({}));
+        if (body?.error?.code === "POLICY_VIOLATION") {
+          const blocked: GatewayResponse = {
+            request_id: body.error.request_id ?? "",
+            status: "blocked",
+            model: "",
+            content: null,
+            pii_findings: [],
+            warnings: [body.error.message ?? "Request blocked by policy."],
+            usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+            sentorix_latency_ms: 0,
+          };
+          setResult(blocked);
+          setRedactedTypes(new Set());
+          return;
+        }
+        setError(`Error 403: ${body?.error?.message ?? "Forbidden"}`);
+        return;
+      }
       if (!res.ok) {
         const body = await res.json().catch(() => null);
         const detail = body?.error?.message ?? body?.detail ?? JSON.stringify(body);
@@ -353,6 +374,22 @@ export function LiveDemo() {
                 <h3 className="text-sm font-semibold text-gray-200 mb-3">AI Response</h3>
                 <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
                   {result.content}
+                </p>
+              </div>
+            )}
+
+            {/* Blocked by policy */}
+            {result !== null && result.status === "blocked" && (
+              <div className="bg-red-950/40 border border-red-500/30 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-sm font-bold text-red-400">Request blocked by Sentorix</span>
+                </div>
+                <p className="text-sm text-red-300/80 leading-relaxed">
+                  {result.warnings[0] ?? "High-risk data detected. Request was not forwarded to the AI provider."}
+                </p>
+                <p className="text-xs text-gray-500 mt-3">
+                  This is Sentorix working correctly — your AI provider never saw this data.
+                  Try unchecking some entities above and resubmitting, or use a lower-risk prompt.
                 </p>
               </div>
             )}
