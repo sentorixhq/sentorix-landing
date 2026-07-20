@@ -119,7 +119,9 @@ export function LiveDemo() {
         return;
       }
       if (!res.ok) {
-        setError("Something went wrong. Please try again.");
+        const body = await res.json().catch(() => null);
+        const detail = body?.error?.message ?? body?.detail ?? JSON.stringify(body);
+        setError(`Error ${res.status}: ${detail}`);
         return;
       }
 
