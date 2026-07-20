@@ -70,6 +70,7 @@ Please summarise the treatment plan for patient record #4929-184 and keep this c
 
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL ?? "";
 const DEMO_API_KEY = process.env.NEXT_PUBLIC_DEMO_API_KEY ?? "demo-api-key";
+const MAX_PROMPT_CHARS = 3000;
 
 const STATUS_STYLES = {
   allowed: { badge: "bg-green-500/20 text-green-400 border border-green-500/30", dot: "bg-green-400" },
@@ -199,11 +200,16 @@ export function LiveDemo() {
               </label>
               <textarea
                 value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
+                onChange={(e) => setPrompt(e.target.value.slice(0, MAX_PROMPT_CHARS))}
                 rows={9}
                 className="w-full bg-dark-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-300 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-brand-500/50 resize-none font-mono leading-loose"
                 placeholder="Type or paste a prompt containing sensitive data..."
               />
+              <div className="flex justify-end mt-1">
+                <span className={`text-xs tabular-nums ${prompt.length >= MAX_PROMPT_CHARS ? "text-red-400" : "text-gray-600"}`}>
+                  {prompt.length}/{MAX_PROMPT_CHARS}
+                </span>
+              </div>
               <button
                 onClick={handleSubmit}
                 disabled={loading || !prompt.trim()}
